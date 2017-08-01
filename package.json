@@ -1,0 +1,26 @@
+{
+  "name": "csvcut",
+  "version": "0.0.1",
+  "description": "cut libo csv file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cut-csv"
+  ],
+  "author": "albus yang",
+  "license": "ISC",
+  "dependencies": {
+    "lei-stream": "^1.4.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albusyang/qit_csvcut.git"
+  },
+  "bugs": {
+    "url": "https://github.com/albusyang/qit_csvcut/issues"
+  },
+  "homepage": "https://github.com/albusyang/qit_csvcut#readme"
+}
