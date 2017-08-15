@@ -2,7 +2,7 @@ var readLine = require('lei-stream').readLine;
 var writeLine = require('lei-stream').writeLine;
 
 var outputPath = 'F:/historical_data/COMEX_AUFC1_n/';
-var inputCsv = 'F:/待处理-新历史数据/bo.li@thomsonreuters.com-test-COMEX-N152291441-part002.csv';
+var inputCsv = 'F:/待处理-新历史数据/bo.li@thomsonreuters.com-test-COMEX-N152291441-part005.csv';
 var counter = 0;
 var startTime = Date.now();
 var output = null;
@@ -32,6 +32,7 @@ var init = function () {
         next(); // 读取下一行
     }, function () {
         console.log('done. total %s lines, spent %sS', counter, msToS(getSpentTime()));
+        console.log('完成 ------- ' + code + '-' + currentFileMonthYear);
         output.end();
     });
 }
@@ -71,14 +72,15 @@ var pickUp = function (data) {
             newCsvFile = outputPath + code + '-' + currentFileMonthYear + '.csv';
             forWriteLine = firstLine + data;
             output = writeLine(newCsvFile, {
-                cacheLines: 100000
+                cacheLines: 150000
             });
             writeFile(forWriteLine);
             return;
         }
         if (code != tempCode) {
-            currentFileMonthYear = curLineMonthYear;
+            console.log('完成 ------- ' + code + '-' + currentFileMonthYear);
             output.end(); // 品种交替，将上一个文件写好，开始新的
+            currentFileMonthYear = curLineMonthYear;
             code = tempCode;
             newCsvFile = outputPath + code + '-' + curLineMonthYear + '.csv';
             forWriteLine = firstLine + data;
@@ -89,8 +91,9 @@ var pickUp = function (data) {
             return;
         }
         if (currentFileMonthYear != curLineMonthYear) {
+            console.log('完成 ------- ' + code + '-' + currentFileMonthYear);
+            output.end(); // 品种交替，将上一个文件写好，开始新的
             currentFileMonthYear = curLineMonthYear;
-            output.end();
             code = tempCode;
             newCsvFile = outputPath + code + '-' + currentFileMonthYear + '.csv';
             forWriteLine = firstLine + data;
